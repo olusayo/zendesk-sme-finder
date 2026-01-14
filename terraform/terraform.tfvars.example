@@ -1,0 +1,20 @@
+# Zendesk SME Finder - Terraform Variables
+# Copy this file to terraform.tfvars and fill in your actual values
+
+# Required: Zendesk Configuration
+zendesk_domain    = "yourcompany.zendesk.com"  # Replace with your Zendesk domain
+zendesk_email     = "your-email@example.com"   # Replace with your Zendesk API user email
+zendesk_api_token = "your-zendesk-api-token"   # Replace with your Zendesk API token
+
+# Required: Slack Configuration
+slack_bot_token = "xoxb-your-slack-bot-token"    # Replace with your Slack bot token
+slack_team_url  = "https://yourteam.slack.com"   # Replace with your Slack workspace URL
+
+# Bedrock Agent Configuration (from Step 8 of deployment guide)
+bedrock_agent_id       = "FKOKX6LWCB"      # Your Bedrock Agent ID
+bedrock_agent_alias_id = "TSTALIASID"      # Your Bedrock Agent Alias ID
+
+# Optional: Override default values if needed
+# aws_region = "us-east-1"
+# environment = "production"
+# project_name = "zendesk-sme-finder"

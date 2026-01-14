@@ -1,0 +1,252 @@
+{
+  "Comment": "SME Matching Workflow - Orchestrates the entire SME recommendation process",
+  "StartAt": "ValidateInput",
+  "States": {
+    "ValidateInput": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS_REGION}:${AWS_ACCOUNT_ID}:function:validate-input",
+        "Payload": {
+          "ticket_id.$": "$.ticket_id",
+          "bucket.$": "$.bucket",
+          "key.$": "$.key"
+        }
+      },
+      "ResultPath": "$.validation",
+      "Next": "CheckEmbeddingExists",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "ValidationFailed"
+        }
+      ]
+    },
+
+    "CheckEmbeddingExists": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.embedding_exists",
+          "BooleanEquals": false,
+          "Next": "GenerateEmbedding"
+        }
+      ],
+      "Default": "RunRAGPipeline"
+    },
+
+    "GenerateEmbedding": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS_REGION}:${AWS_ACCOUNT_ID}:function:embedding-generator",
+        "Payload": {
+          "Records": [
+            {
+              "s3": {
+                "bucket": {
+                  "name.$": "$.bucket"
+                },
+                "object": {
+                  "key.$": "$.key"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "ResultPath": "$.embedding_result",
+      "Next": "WaitForEmbedding",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.Timeout"],
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0,
+          "IntervalSeconds": 3
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "EmbeddingGenerationFailed"
+        }
+      ]
+    },
+
+    "WaitForEmbedding": {
+      "Type": "Wait",
+      "Seconds": 2,
+      "Next": "RunRAGPipeline"
+    },
+
+    "RunRAGPipeline": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::ecs:runTask.sync",
+      "Parameters": {
+        "Cluster": "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:cluster/sme-finder-cluster",
+        "TaskDefinition": "arn:aws:ecs:${AWS_REGION}:${AWS_ACCOUNT_ID}:task-definition/rag-engine",
+        "LaunchType": "FARGATE",
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
+            "Subnets": ["${PRIVATE_SUBNET_1}", "${PRIVATE_SUBNET_2}"],
+            "SecurityGroups": ["${ECS_SECURITY_GROUP}"],
+            "AssignPublicIp": "DISABLED"
+          }
+        },
+        "Overrides": {
+          "ContainerOverrides": [
+            {
+              "Name": "rag-engine",
+              "Environment": [
+                {
+                  "Name": "TICKET_ID",
+                  "Value.$": "$.ticket_id"
+                },
+                {
+                  "Name": "S3_BUCKET",
+                  "Value.$": "$.bucket"
+                },
+                {
+                  "Name": "S3_KEY",
+                  "Value.$": "$.key"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "ResultPath": "$.rag_result",
+      "TimeoutSeconds": 300,
+      "Next": "ParseRAGOutput",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.Timeout"],
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0,
+          "IntervalSeconds": 5
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "RAGPipelineFailed"
+        }
+      ]
+    },
+
+    "ParseRAGOutput": {
+      "Type": "Pass",
+      "Parameters": {
+        "ticket_id.$": "$.ticket_id",
+        "top_smes.$": "$.rag_result.Output.top_smes",
+        "reasoning.$": "$.rag_result.Output.reasoning",
+        "confidence.$": "$.rag_result.Output.confidence"
+      },
+      "ResultPath": "$.sme_recommendations",
+      "Next": "ValidateSMERecommendations"
+    },
+
+    "ValidateSMERecommendations": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.sme_recommendations.top_smes[0].confidence",
+          "NumericLessThan": 0.6,
+          "Next": "LowConfidenceAlert"
+        },
+        {
+          "Variable": "$.sme_recommendations.top_smes",
+          "IsPresent": false,
+          "Next": "NoSMEsFound"
+        }
+      ],
+      "Default": "SendSlackNotification"
+    },
+
+    "SendSlackNotification": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS_REGION}:${AWS_ACCOUNT_ID}:function:slack-bot",
+        "Payload": {
+          "action": "notify_cre",
+          "ticket_id.$": "$.ticket_id",
+          "sme_recommendations.$": "$.sme_recommendations"
+        }
+      },
+      "ResultPath": "$.slack_result",
+      "Next": "WorkflowSuccess",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "SlackNotificationFailed"
+        }
+      ]
+    },
+
+    "WorkflowSuccess": {
+      "Type": "Succeed"
+    },
+
+    "LowConfidenceAlert": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS_REGION}:${AWS_ACCOUNT_ID}:function:low-confidence-handler",
+        "Payload": {
+          "ticket_id.$": "$.ticket_id",
+          "confidence.$": "$.sme_recommendations.top_smes[0].confidence",
+          "reason": "Confidence score below threshold (0.6)"
+        }
+      },
+      "ResultPath": "$.alert_result",
+      "Next": "ManualEscalation"
+    },
+
+    "NoSMEsFound": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:${AWS_REGION}:${AWS_ACCOUNT_ID}:function:low-confidence-handler",
+        "Payload": {
+          "ticket_id.$": "$.ticket_id",
+          "reason": "No SMEs found in vector search results"
+        }
+      },
+      "ResultPath": "$.alert_result",
+      "Next": "ManualEscalation"
+    },
+
+    "ManualEscalation": {
+      "Type": "Succeed"
+    },
+
+    "ValidationFailed": {
+      "Type": "Fail",
+      "Error": "ValidationError",
+      "Cause": "Input validation failed. Check ticket_id, bucket, and key parameters."
+    },
+
+    "EmbeddingGenerationFailed": {
+      "Type": "Fail",
+      "Error": "EmbeddingGenerationError",
+      "Cause": "Failed to generate embeddings for the ticket. Check Bedrock and Pinecone connectivity."
+    },
+
+    "RAGPipelineFailed": {
+      "Type": "Fail",
+      "Error": "RAGPipelineError",
+      "Cause": "RAG engine failed to process the ticket. Check ECS task logs."
+    },
+
+    "SlackNotificationFailed": {
+      "Type": "Fail",
+      "Error": "SlackNotificationError",
+      "Cause": "Failed to send Slack notification. Check Slack bot configuration."
+    }
+  }
+}

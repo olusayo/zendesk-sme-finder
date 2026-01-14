@@ -1,0 +1,305 @@
+[
+  {
+    "fde_name": "Sarah Chen",
+    "email": "sarah.chen@company.com",
+    "slack_id": "U01ABC123",
+    "expertise_areas": [
+      "Database Performance",
+      "PostgreSQL",
+      "MySQL",
+      "RDS",
+      "SQL Optimization",
+      "Query Tuning",
+      "Index Design"
+    ],
+    "years_experience": 8,
+    "certifications": [
+      "AWS Certified Database - Specialty",
+      "PostgreSQL Certified Professional"
+    ],
+    "notable_projects": [
+      "Optimized Fortune 500 company database reducing query time by 90%",
+      "Migrated 50TB MySQL database to RDS with zero downtime",
+      "Designed sharding strategy for multi-tenant SaaS application"
+    ],
+    "tickets_resolved": 247,
+    "average_resolution_time_hours": 5.2,
+    "customer_satisfaction_score": 4.8,
+    "availability": "Full-time",
+    "time_zone": "US/Pacific",
+    "languages": ["English", "Mandarin"]
+  },
+  {
+    "fde_name": "Marcus Rodriguez",
+    "email": "marcus.rodriguez@company.com",
+    "slack_id": "U02DEF456",
+    "expertise_areas": [
+      "Lambda",
+      "Serverless",
+      "Node.js",
+      "Python",
+      "Event-Driven Architecture",
+      "Stream Processing",
+      "Kinesis"
+    ],
+    "years_experience": 6,
+    "certifications": [
+      "AWS Certified Solutions Architect - Professional",
+      "AWS Certified Developer - Associate"
+    ],
+    "notable_projects": [
+      "Built real-time analytics pipeline processing 1M events/second",
+      "Architected serverless microservices for media streaming platform",
+      "Reduced Lambda costs by 60% through optimization"
+    ],
+    "tickets_resolved": 312,
+    "average_resolution_time_hours": 4.1,
+    "customer_satisfaction_score": 4.9,
+    "availability": "Full-time",
+    "time_zone": "US/Eastern",
+    "languages": ["English", "Spanish"]
+  },
+  {
+    "fde_name": "Priya Patel",
+    "email": "priya.patel@company.com",
+    "slack_id": "U03GHI789",
+    "expertise_areas": [
+      "DynamoDB",
+      "NoSQL",
+      "DAX",
+      "Data Modeling",
+      "Capacity Planning",
+      "ElastiCache",
+      "Redis"
+    ],
+    "years_experience": 7,
+    "certifications": [
+      "AWS Certified Database - Specialty",
+      "AWS Certified Solutions Architect - Associate"
+    ],
+    "notable_projects": [
+      "Designed DynamoDB schema for IoT platform handling 10M devices",
+      "Implemented global tables for multi-region e-commerce platform",
+      "Reduced DynamoDB costs by 70% through capacity optimization"
+    ],
+    "tickets_resolved": 198,
+    "average_resolution_time_hours": 6.3,
+    "customer_satisfaction_score": 4.7,
+    "availability": "Full-time",
+    "time_zone": "US/Central",
+    "languages": ["English", "Hindi", "Gujarati"]
+  },
+  {
+    "fde_name": "James Kim",
+    "email": "james.kim@company.com",
+    "slack_id": "U04JKL012",
+    "expertise_areas": [
+      "ECS",
+      "Fargate",
+      "Docker",
+      "Kubernetes",
+      "Container Orchestration",
+      "Load Balancing",
+      "Service Mesh"
+    ],
+    "years_experience": 9,
+    "certifications": [
+      "AWS Certified Solutions Architect - Professional",
+      "Certified Kubernetes Administrator (CKA)",
+      "Docker Certified Associate"
+    ],
+    "notable_projects": [
+      "Migrated monolith to microservices on ECS for financial services company",
+      "Implemented auto-scaling ECS cluster handling Black Friday traffic",
+      "Designed hybrid ECS/EKS architecture for Fortune 100 enterprise"
+    ],
+    "tickets_resolved": 276,
+    "average_resolution_time_hours": 5.8,
+    "customer_satisfaction_score": 4.8,
+    "availability": "Full-time",
+    "time_zone": "US/Pacific",
+    "languages": ["English", "Korean"]
+  },
+  {
+    "fde_name": "Emily Watson",
+    "email": "emily.watson@company.com",
+    "slack_id": "U05MNO345",
+    "expertise_areas": [
+      "CloudFront",
+      "CDN",
+      "Caching Strategies",
+      "Performance Optimization",
+      "S3",
+      "Edge Computing",
+      "Lambda@Edge"
+    ],
+    "years_experience": 5,
+    "certifications": [
+      "AWS Certified Solutions Architect - Associate",
+      "AWS Certified Developer - Associate"
+    ],
+    "notable_projects": [
+      "Optimized video streaming platform reducing latency by 80%",
+      "Implemented CloudFront with Lambda@Edge for personalized content delivery",
+      "Designed global CDN architecture serving 50M+ users"
+    ],
+    "tickets_resolved": 203,
+    "average_resolution_time_hours": 4.5,
+    "customer_satisfaction_score": 4.9,
+    "availability": "Full-time",
+    "time_zone": "US/Mountain",
+    "languages": ["English", "French"]
+  },
+  {
+    "fde_name": "David Thompson",
+    "email": "david.thompson@company.com",
+    "slack_id": "U06PQR678",
+    "expertise_areas": [
+      "SQS",
+      "SNS",
+      "EventBridge",
+      "Message Processing",
+      "Event-Driven Systems",
+      "Dead Letter Queues",
+      "Idempotency"
+    ],
+    "years_experience": 7,
+    "certifications": [
+      "AWS Certified Solutions Architect - Professional",
+      "AWS Certified DevOps Engineer - Professional"
+    ],
+    "notable_projects": [
+      "Built distributed order processing system handling 1M orders/day",
+      "Architected event-driven microservices for payment processing",
+      "Designed resilient messaging infrastructure with 99.99% delivery guarantee"
+    ],
+    "tickets_resolved": 289,
+    "average_resolution_time_hours": 5.5,
+    "customer_satisfaction_score": 4.7,
+    "availability": "Full-time",
+    "time_zone": "US/Eastern",
+    "languages": ["English"]
+  },
+  {
+    "fde_name": "Rachel Green",
+    "email": "rachel.green@company.com",
+    "slack_id": "U07STU901",
+    "expertise_areas": [
+      "Cost Optimization",
+      "S3",
+      "Lifecycle Policies",
+      "FinOps",
+      "Reserved Instances",
+      "Savings Plans",
+      "Cost Analysis"
+    ],
+    "years_experience": 6,
+    "certifications": [
+      "AWS Certified Solutions Architect - Professional",
+      "AWS Certified Cloud Practitioner",
+      "FinOps Certified Practitioner"
+    ],
+    "notable_projects": [
+      "Reduced AWS costs by $2M annually for healthcare company",
+      "Implemented automated cost optimization using Lambda and Cost Explorer API",
+      "Designed multi-account cost allocation strategy for enterprise"
+    ],
+    "tickets_resolved": 156,
+    "average_resolution_time_hours": 6.8,
+    "customer_satisfaction_score": 4.9,
+    "availability": "Full-time",
+    "time_zone": "US/Pacific",
+    "languages": ["English"]
+  },
+  {
+    "fde_name": "Michael Brown",
+    "email": "michael.brown@company.com",
+    "slack_id": "U08VWX234",
+    "expertise_areas": [
+      "API Gateway",
+      "REST APIs",
+      "GraphQL",
+      "API Design",
+      "Rate Limiting",
+      "Authentication",
+      "API Security"
+    ],
+    "years_experience": 8,
+    "certifications": [
+      "AWS Certified Solutions Architect - Professional",
+      "AWS Certified Security - Specialty"
+    ],
+    "notable_projects": [
+      "Designed API platform serving 10,000 requests/second for fintech startup",
+      "Implemented OAuth2 and JWT authentication for multi-tenant API",
+      "Built GraphQL gateway aggregating 15 microservices"
+    ],
+    "tickets_resolved": 234,
+    "average_resolution_time_hours": 4.9,
+    "customer_satisfaction_score": 4.8,
+    "availability": "Full-time",
+    "time_zone": "US/Central",
+    "languages": ["English", "German"]
+  },
+  {
+    "fde_name": "Lisa Martinez",
+    "email": "lisa.martinez@company.com",
+    "slack_id": "U09YZA567",
+    "expertise_areas": [
+      "RDS",
+      "MySQL",
+      "PostgreSQL",
+      "Aurora",
+      "Read Replicas",
+      "Multi-AZ",
+      "Backup and Recovery"
+    ],
+    "years_experience": 10,
+    "certifications": [
+      "AWS Certified Database - Specialty",
+      "MySQL Database Administrator Certified Professional",
+      "PostgreSQL Certified Professional"
+    ],
+    "notable_projects": [
+      "Migrated 100TB on-premises Oracle database to Aurora PostgreSQL",
+      "Designed multi-region RDS architecture with RPO < 1 minute",
+      "Implemented automated failover reducing downtime from hours to seconds"
+    ],
+    "tickets_resolved": 321,
+    "average_resolution_time_hours": 6.7,
+    "customer_satisfaction_score": 4.9,
+    "availability": "Full-time",
+    "time_zone": "US/Eastern",
+    "languages": ["English", "Spanish", "Portuguese"]
+  },
+  {
+    "fde_name": "Kevin Lee",
+    "email": "kevin.lee@company.com",
+    "slack_id": "U10BCD890",
+    "expertise_areas": [
+      "Step Functions",
+      "Workflow Orchestration",
+      "State Machines",
+      "Error Handling",
+      "Distributed Systems",
+      "Saga Pattern",
+      "Compensation Logic"
+    ],
+    "years_experience": 6,
+    "certifications": [
+      "AWS Certified Solutions Architect - Professional",
+      "AWS Certified Developer - Associate"
+    ],
+    "notable_projects": [
+      "Built complex order fulfillment workflow processing 500K orders/day",
+      "Designed data pipeline orchestration with Step Functions and Glue",
+      "Implemented human-in-the-loop approval workflows for compliance"
+    ],
+    "tickets_resolved": 187,
+    "average_resolution_time_hours": 5.9,
+    "customer_satisfaction_score": 4.7,
+    "availability": "Full-time",
+    "time_zone": "US/Pacific",
+    "languages": ["English", "Korean", "Japanese"]
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "ticket_id": "10001",
+    "subject": "PostgreSQL performance degradation on production database",
+    "description": "Customer reporting slow query performance on their RDS PostgreSQL instance. Queries that normally take 2-3 seconds are now taking 30+ seconds. Database has grown to 500GB. No recent schema changes.",
+    "resolution": "Analysis showed missing indexes on frequently queried columns. Created composite indexes on user_id and created_at columns. Implemented connection pooling with PgBouncer. Ran VACUUM ANALYZE to update statistics. Query performance improved to sub-second response times.",
+    "assigned_fde": "Sarah Chen",
+    "technologies": ["PostgreSQL", "AWS RDS", "Database Performance", "SQL Optimization"],
+    "ticket_type": "Performance Issue",
+    "resolution_time_hours": 6,
+    "success": true,
+    "customer_satisfaction": 5
+  },
+  {
+    "ticket_id": "10002",
+    "subject": "Lambda function timing out when processing S3 events",
+    "description": "Customer's Lambda function processes CSV files uploaded to S3. Function times out after 15 minutes when processing files larger than 100MB. Memory set to 3GB, runtime Node.js 18.",
+    "resolution": "Identified that Lambda was loading entire CSV into memory. Recommended switching to streaming approach using csv-parser library. For very large files (>500MB), recommended implementing Step Functions workflow to process in chunks. Customer implemented streaming solution and timeout issues resolved.",
+    "assigned_fde": "Marcus Rodriguez",
+    "technologies": ["AWS Lambda", "S3", "Node.js", "CSV Processing", "Streaming"],
+    "ticket_type": "Timeout Issue",
+    "resolution_time_hours": 4,
+    "success": true,
+    "customer_satisfaction": 5
+  },
+  {
+    "ticket_id": "10003",
+    "subject": "DynamoDB throttling errors during peak traffic",
+    "description": "E-commerce application experiencing throttling on DynamoDB table during flash sales. Getting ProvisionedThroughputExceededException errors. Table has 100 RCU/WCU provisioned capacity. Traffic spikes to 5000+ requests/second.",
+    "resolution": "Switched table from provisioned to on-demand billing mode to handle unpredictable traffic spikes. Implemented DAX (DynamoDB Accelerator) for read-heavy workloads. Added exponential backoff retry logic in application code. Optimized query patterns to use sparse indexes. System now handles peak loads without throttling.",
+    "assigned_fde": "Priya Patel",
+    "technologies": ["DynamoDB", "DAX", "Capacity Planning", "NoSQL"],
+    "ticket_type": "Throttling Issue",
+    "resolution_time_hours": 8,
+    "success": true,
+    "customer_satisfaction": 4
+  },
+  {
+    "ticket_id": "10004",
+    "subject": "ECS Fargate tasks failing health checks and restarting",
+    "description": "Fargate tasks keep failing ALB health checks and getting terminated/restarted in a loop. Application is a Python Flask API. Health check endpoint is /health. Tasks show as running but ALB marks them unhealthy after 30 seconds.",
+    "resolution": "Discovered Flask app was binding to 127.0.0.1 instead of 0.0.0.0, making health check unreachable from ALB. Updated Flask app.run() to bind to 0.0.0.0. Also increased health check grace period from 30s to 120s to allow for slower container startup. Implemented proper /health endpoint that checks database connectivity. Tasks now stable.",
+    "assigned_fde": "James Kim",
+    "technologies": ["ECS Fargate", "Application Load Balancer", "Docker", "Python Flask", "Health Checks"],
+    "ticket_type": "Container Issue",
+    "resolution_time_hours": 3,
+    "success": true,
+    "customer_satisfaction": 5
+  },
+  {
+    "ticket_id": "10005",
+    "subject": "CloudFront cache hit ratio very low, high origin load",
+    "description": "Customer using CloudFront to serve static assets and API responses. Cache hit ratio only 15%, causing high load on origin servers. TTL set to 3600 seconds. Query strings present in most requests.",
+    "resolution": "Analysis showed query strings with random cache-busting parameters causing each request to be treated as unique. Configured CloudFront to forward only specific query parameters needed by application. Implemented cache key normalization. Set up separate behaviors for static assets (longer TTL) vs dynamic content. Added versioned URLs for static assets to enable aggressive caching. Cache hit ratio improved to 85%.",
+    "assigned_fde": "Emily Watson",
+    "technologies": ["CloudFront", "CDN", "Caching", "Performance Optimization"],
+    "ticket_type": "Caching Issue",
+    "resolution_time_hours": 5,
+    "success": true,
+    "customer_satisfaction": 5
+  },
+  {
+    "ticket_id": "10006",
+    "subject": "SQS messages not being processed, DLQ filling up",
+    "description": "SQS queue has 50,000+ messages but Lambda consumer not processing them. Dead Letter Queue accumulating failed messages. Lambda has correct trigger configured. No errors in CloudWatch Logs from Lambda.",
+    "resolution": "Found that Lambda concurrent execution limit was reached due to other functions in account consuming all available concurrency (1000 limit). Configured reserved concurrency of 200 for this critical Lambda function. Also discovered message visibility timeout (30s) was shorter than Lambda execution time (45s), causing duplicate processing. Increased visibility timeout to 5 minutes. Implemented idempotency keys in processing logic. Redrove messages from DLQ after fixes.",
+    "assigned_fde": "David Thompson",
+    "technologies": ["SQS", "Lambda", "Concurrency", "Message Processing", "DLQ"],
+    "ticket_type": "Message Processing Issue",
+    "resolution_time_hours": 7,
+    "success": true,
+    "customer_satisfaction": 4
+  },
+  {
+    "ticket_id": "10007",
+    "subject": "S3 bucket costs unexpectedly high, 10TB+ storage",
+    "description": "Monthly S3 costs jumped from $200 to $3000. Bucket shows 10TB of data but customer expects only 2TB. Versioning is enabled. No obvious explanation for the growth.",
+    "resolution": "Investigation revealed versioning was accumulating old versions of frequently updated objects. Created lifecycle policy to transition non-current versions to S3 Glacier after 30 days and delete after 90 days. Used S3 Inventory to identify duplicate files across different prefixes. Implemented S3 Intelligent-Tiering for infrequently accessed data. Storage reduced to 2.5TB, costs dropped to $400/month.",
+    "assigned_fde": "Rachel Green",
+    "technologies": ["S3", "Cost Optimization", "Lifecycle Policies", "S3 Intelligent-Tiering"],
+    "ticket_type": "Cost Optimization",
+    "resolution_time_hours": 6,
+    "success": true,
+    "customer_satisfaction": 5
+  },
+  {
+    "ticket_id": "10008",
+    "subject": "API Gateway 502 errors during traffic spikes",
+    "description": "REST API built with API Gateway + Lambda returns 502 Bad Gateway errors when traffic exceeds 1000 requests/second. Works fine under normal load (100-200 req/s). Lambda has sufficient concurrency, no throttling observed.",
+    "resolution": "Root cause was Lambda cold starts during traffic spikes. Implemented provisioned concurrency for Lambda (50 instances). Added API Gateway caching for GET endpoints with 300s TTL. Enabled API Gateway throttling limits (5000 req/s burst, 2000 req/s steady state) to prevent overwhelming backend. Implemented exponential backoff in client applications. 502 errors eliminated.",
+    "assigned_fde": "Michael Brown",
+    "technologies": ["API Gateway", "Lambda", "Provisioned Concurrency", "Cold Starts", "Throttling"],
+    "ticket_type": "API Error",
+    "resolution_time_hours": 5,
+    "success": true,
+    "customer_satisfaction": 5
+  },
+  {
+    "ticket_id": "10009",
+    "subject": "RDS MySQL read replica lag increasing over time",
+    "description": "MySQL read replica in different region showing increasing replication lag, currently at 10+ minutes. Primary DB has moderate write load (500 writes/second). Replica is m5.large instance.",
+    "resolution": "Analysis showed replica was undersized for the write workload. Upgraded replica to m5.2xlarge with provisioned IOPS storage (10,000 IOPS). Identified several large transactions on primary that were blocking replication. Recommended breaking large batch operations into smaller chunks. Implemented parallel replication threads. Lag reduced to under 5 seconds.",
+    "assigned_fde": "Lisa Martinez",
+    "technologies": ["RDS MySQL", "Read Replicas", "Replication Lag", "Database Performance"],
+    "ticket_type": "Replication Issue",
+    "resolution_time_hours": 8,
+    "success": true,
+    "customer_satisfaction": 4
+  },
+  {
+    "ticket_id": "10010",
+    "subject": "Step Functions workflow stuck in running state",
+    "description": "Step Functions state machine processing file uploads has 20 executions stuck in 'Running' state for over 24 hours. Workflow includes Lambda functions, ECS tasks, and SNS notifications. No errors visible in execution history.",
+    "resolution": "Found that ECS task in workflow was not properly reporting completion status to Step Functions. Task was using RunTask (fire-and-forget) instead of StartTask API. Updated state machine to use ECS RunTask in sync mode with heartbeat configuration. Added timeout configuration to all states (5 minutes for Lambda, 60 minutes for ECS). Implemented error handling with retry and catch blocks. Manually stopped stuck executions. New executions completing successfully.",
+    "assigned_fde": "Kevin Lee",
+    "technologies": ["Step Functions", "ECS", "Lambda", "Workflow Orchestration", "Error Handling"],
+    "ticket_type": "Workflow Issue",
+    "resolution_time_hours": 6,
+    "success": true,
+    "customer_satisfaction": 5
+  }
+]

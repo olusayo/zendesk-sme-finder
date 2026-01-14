@@ -1,0 +1,4 @@
+# Slack Action Group Requirements
+
+boto3>=1.28.0
+slack-sdk>=3.23.0
