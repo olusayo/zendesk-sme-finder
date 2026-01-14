@@ -10,7 +10,7 @@ resource "aws_opensearchserverless_security_policy" "knowledge_base_encryption" 
       {
         Resource = [
           "collection/${var.project_name}-tickets-kb",
-          "collection/${var.project_name}-fde-profiles-kb"
+          "collection/zendesk-sme-fde-profiles-kb"
         ]
         ResourceType = "collection"
       }
@@ -29,7 +29,7 @@ resource "aws_opensearchserverless_security_policy" "knowledge_base_network" {
         {
           Resource = [
             "collection/${var.project_name}-tickets-kb",
-            "collection/${var.project_name}-fde-profiles-kb"
+            "collection/zendesk-sme-fde-profiles-kb"
           ]
           ResourceType = "collection"
         }
@@ -41,7 +41,7 @@ resource "aws_opensearchserverless_security_policy" "knowledge_base_network" {
 
 # Data access policy for OpenSearch Serverless collections
 resource "aws_opensearchserverless_access_policy" "knowledge_base_data_access" {
-  name = "${var.project_name}-kb-data-access"
+  name = "zendesk-sme-kb-data-access"
   type = "data"
   policy = jsonencode([
     {
@@ -49,7 +49,7 @@ resource "aws_opensearchserverless_access_policy" "knowledge_base_data_access" {
         {
           Resource = [
             "collection/${var.project_name}-tickets-kb",
-            "collection/${var.project_name}-fde-profiles-kb"
+            "collection/zendesk-sme-fde-profiles-kb"
           ]
           Permission = [
             "aoss:CreateCollectionItems",
@@ -62,7 +62,7 @@ resource "aws_opensearchserverless_access_policy" "knowledge_base_data_access" {
         {
           Resource = [
             "index/${var.project_name}-tickets-kb/*",
-            "index/${var.project_name}-fde-profiles-kb/*"
+            "index/zendesk-sme-fde-profiles-kb/*"
           ]
           Permission = [
             "aoss:CreateIndex",
@@ -81,6 +81,13 @@ resource "aws_opensearchserverless_access_policy" "knowledge_base_data_access" {
       ]
     }
   ])
+
+  depends_on = [
+    aws_iam_role.knowledge_base_tickets,
+    aws_iam_role.knowledge_base_fde_profiles,
+    aws_iam_role_policy.knowledge_base_tickets_policy,
+    aws_iam_role_policy.knowledge_base_fde_profiles_policy
+  ]
 }
 
 # OpenSearch Serverless collection for Tickets Knowledge Base
@@ -101,7 +108,7 @@ resource "aws_opensearchserverless_collection" "tickets_kb" {
 
 # OpenSearch Serverless collection for FDE Profiles Knowledge Base
 resource "aws_opensearchserverless_collection" "fde_profiles_kb" {
-  name = "${var.project_name}-fde-profiles-kb"
+  name = "zendesk-sme-fde-profiles-kb"
   type = "VECTORSEARCH"
 
   depends_on = [

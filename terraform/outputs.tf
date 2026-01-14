@@ -83,10 +83,10 @@ output "bedrock_resources" {
     agent_arn             = aws_bedrockagent_agent.fde_finder[0].agent_arn
     test_alias_id         = aws_bedrockagent_agent_alias.test[0].agent_alias_id
     production_alias_id   = aws_bedrockagent_agent_alias.production[0].agent_alias_id
-    tickets_kb_id         = aws_bedrockagent_knowledge_base.tickets.id
-    fde_profiles_kb_id    = aws_bedrockagent_knowledge_base.fde_profiles.id
-    tickets_data_source   = aws_bedrockagent_data_source.tickets.data_source_id
-    fde_profiles_data_source = aws_bedrockagent_data_source.fde_profiles.data_source_id
+    tickets_kb_id         = var.enable_knowledge_bases ? aws_bedrockagent_knowledge_base.tickets[0].id : null
+    fde_profiles_kb_id    = var.enable_knowledge_bases ? aws_bedrockagent_knowledge_base.fde_profiles[0].id : null
+    tickets_data_source   = var.enable_knowledge_bases ? aws_bedrockagent_data_source.tickets[0].data_source_id : null
+    fde_profiles_data_source = var.enable_knowledge_bases ? aws_bedrockagent_data_source.fde_profiles[0].data_source_id : null
   } : null
 }
 
@@ -126,8 +126,8 @@ output "post_deployment_instructions" {
      - Tickets: s3://${aws_s3_bucket.knowledge_base_data.id}/tickets/
      - FDE Profiles: s3://${aws_s3_bucket.knowledge_base_data.id}/fde-profiles/
 
-     Then trigger ingestion:
-     ${var.enable_bedrock_agent ? "aws bedrock-agent start-ingestion-job --knowledge-base-id ${aws_bedrockagent_knowledge_base.tickets.id} --data-source-id ${aws_bedrockagent_data_source.tickets.data_source_id}" : "# Set enable_bedrock_agent=true to auto-create"}
+     Then trigger ingestion (after creating Knowledge Bases manually):
+     ${var.enable_knowledge_bases ? "aws bedrock-agent start-ingestion-job --knowledge-base-id ${aws_bedrockagent_knowledge_base.tickets[0].id} --data-source-id ${aws_bedrockagent_data_source.tickets[0].data_source_id}" : "# Knowledge Bases need to be created manually - see COMPLETE_DEPLOYMENT_GUIDE.md Part 7"}
 
   2. ACCESS YOUR FRONTEND:
      Streamlit App URL: http://${aws_lb.frontend.dns_name}

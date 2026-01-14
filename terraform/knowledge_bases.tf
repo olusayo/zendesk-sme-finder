@@ -3,6 +3,7 @@
 
 # Tickets Knowledge Base
 resource "aws_bedrockagent_knowledge_base" "tickets" {
+  count       = var.enable_knowledge_bases ? 1 : 0
   name        = "${var.project_name}-tickets-kb"
   description = "Historical Zendesk tickets with resolutions for similarity search"
   role_arn    = aws_iam_role.knowledge_base_tickets.arn
@@ -18,9 +19,9 @@ resource "aws_bedrockagent_knowledge_base" "tickets" {
     type = "OPENSEARCH_SERVERLESS"
     opensearch_serverless_configuration {
       collection_arn    = aws_opensearchserverless_collection.tickets_kb.arn
-      vector_index_name = "bedrock-knowledge-base-tickets-index"
+      vector_index_name = "bedrock-knowledge-base-default-index"
       field_mapping {
-        vector_field   = "bedrock-knowledge-base-tickets-vector"
+        vector_field   = "bedrock-knowledge-base-default-vector"
         text_field     = "AMAZON_BEDROCK_TEXT_CHUNK"
         metadata_field = "AMAZON_BEDROCK_METADATA"
       }
@@ -40,7 +41,8 @@ resource "aws_bedrockagent_knowledge_base" "tickets" {
 
 # Tickets Data Source
 resource "aws_bedrockagent_data_source" "tickets" {
-  knowledge_base_id = aws_bedrockagent_knowledge_base.tickets.id
+  count             = var.enable_knowledge_bases ? 1 : 0
+  knowledge_base_id = aws_bedrockagent_knowledge_base.tickets[0].id
   name              = "${var.project_name}-tickets-data-source"
   description       = "S3 data source for historical ticket CSV files"
 
@@ -72,6 +74,7 @@ resource "aws_bedrockagent_data_source" "tickets" {
 
 # FDE Profiles Knowledge Base
 resource "aws_bedrockagent_knowledge_base" "fde_profiles" {
+  count       = var.enable_knowledge_bases ? 1 : 0
   name        = "${var.project_name}-fde-profiles-kb"
   description = "FDE expertise profiles and certifications for expert matching"
   role_arn    = aws_iam_role.knowledge_base_fde_profiles.arn
@@ -87,9 +90,9 @@ resource "aws_bedrockagent_knowledge_base" "fde_profiles" {
     type = "OPENSEARCH_SERVERLESS"
     opensearch_serverless_configuration {
       collection_arn    = aws_opensearchserverless_collection.fde_profiles_kb.arn
-      vector_index_name = "bedrock-knowledge-base-fde-profiles-index"
+      vector_index_name = "bedrock-knowledge-base-default-index"
       field_mapping {
-        vector_field   = "bedrock-knowledge-base-fde-profiles-vector"
+        vector_field   = "bedrock-knowledge-base-default-vector"
         text_field     = "AMAZON_BEDROCK_TEXT_CHUNK"
         metadata_field = "AMAZON_BEDROCK_METADATA"
       }
@@ -109,7 +112,8 @@ resource "aws_bedrockagent_knowledge_base" "fde_profiles" {
 
 # FDE Profiles Data Source
 resource "aws_bedrockagent_data_source" "fde_profiles" {
-  knowledge_base_id = aws_bedrockagent_knowledge_base.fde_profiles.id
+  count             = var.enable_knowledge_bases ? 1 : 0
+  knowledge_base_id = aws_bedrockagent_knowledge_base.fde_profiles[0].id
   name              = "${var.project_name}-fde-profiles-data-source"
   description       = "S3 data source for FDE profile CSV files"
 
@@ -142,30 +146,30 @@ resource "aws_bedrockagent_data_source" "fde_profiles" {
 # Outputs
 output "tickets_knowledge_base_id" {
   description = "ID of the Tickets Knowledge Base"
-  value       = aws_bedrockagent_knowledge_base.tickets.id
+  value       = var.enable_knowledge_bases ? aws_bedrockagent_knowledge_base.tickets[0].id : null
 }
 
 output "tickets_knowledge_base_arn" {
   description = "ARN of the Tickets Knowledge Base"
-  value       = aws_bedrockagent_knowledge_base.tickets.arn
+  value       = var.enable_knowledge_bases ? aws_bedrockagent_knowledge_base.tickets[0].arn : null
 }
 
 output "tickets_data_source_id" {
   description = "ID of the Tickets data source"
-  value       = aws_bedrockagent_data_source.tickets.data_source_id
+  value       = var.enable_knowledge_bases ? aws_bedrockagent_data_source.tickets[0].data_source_id : null
 }
 
 output "fde_profiles_knowledge_base_id" {
   description = "ID of the FDE Profiles Knowledge Base"
-  value       = aws_bedrockagent_knowledge_base.fde_profiles.id
+  value       = var.enable_knowledge_bases ? aws_bedrockagent_knowledge_base.fde_profiles[0].id : null
 }
 
 output "fde_profiles_knowledge_base_arn" {
   description = "ARN of the FDE Profiles Knowledge Base"
-  value       = aws_bedrockagent_knowledge_base.fde_profiles.arn
+  value       = var.enable_knowledge_bases ? aws_bedrockagent_knowledge_base.fde_profiles[0].arn : null
 }
 
 output "fde_profiles_data_source_id" {
   description = "ID of the FDE Profiles data source"
-  value       = aws_bedrockagent_data_source.fde_profiles.data_source_id
+  value       = var.enable_knowledge_bases ? aws_bedrockagent_data_source.fde_profiles[0].data_source_id : null
 }

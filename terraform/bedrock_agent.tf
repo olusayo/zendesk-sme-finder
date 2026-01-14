@@ -253,11 +253,11 @@ resource "aws_bedrockagent_agent_action_group" "slack" {
 
 # Associate Tickets Knowledge Base with Agent
 resource "aws_bedrockagent_agent_knowledge_base_association" "tickets" {
-  count = var.enable_bedrock_agent ? 1 : 0
+  count = var.enable_bedrock_agent && var.enable_knowledge_bases ? 1 : 0
 
   agent_id             = aws_bedrockagent_agent.fde_finder[0].id
   agent_version        = "DRAFT"
-  knowledge_base_id    = aws_bedrockagent_knowledge_base.tickets.id
+  knowledge_base_id    = aws_bedrockagent_knowledge_base.tickets[0].id
   description          = "Historical tickets for similarity search"
   knowledge_base_state = "ENABLED"
 
@@ -268,11 +268,11 @@ resource "aws_bedrockagent_agent_knowledge_base_association" "tickets" {
 
 # Associate FDE Profiles Knowledge Base with Agent
 resource "aws_bedrockagent_agent_knowledge_base_association" "fde_profiles" {
-  count = var.enable_bedrock_agent ? 1 : 0
+  count = var.enable_bedrock_agent && var.enable_knowledge_bases ? 1 : 0
 
   agent_id             = aws_bedrockagent_agent.fde_finder[0].id
   agent_version        = "DRAFT"
-  knowledge_base_id    = aws_bedrockagent_knowledge_base.fde_profiles.id
+  knowledge_base_id    = aws_bedrockagent_knowledge_base.fde_profiles[0].id
   description          = "FDE expertise profiles for expert matching"
   knowledge_base_state = "ENABLED"
 

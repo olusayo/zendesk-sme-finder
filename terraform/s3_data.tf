@@ -6,8 +6,7 @@ resource "aws_s3_bucket" "knowledge_base_data" {
   bucket = "${var.project_name}-kb-data-${data.aws_caller_identity.current.account_id}"
 
   tags = {
-    Name        = "${var.project_name}-knowledge-base-data"
-    Description = "Storage for Knowledge Base data sources (tickets and FDE profiles)"
+    Name = "${var.project_name}-knowledge-base-data"
   }
 }
 
@@ -48,6 +47,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "knowledge_base_data" {
   rule {
     id     = "expire-old-versions"
     status = "Enabled"
+
+    filter {}
 
     noncurrent_version_expiration {
       noncurrent_days = 90
