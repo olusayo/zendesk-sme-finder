@@ -189,11 +189,11 @@ resource "aws_ecs_task_definition" "frontend" {
     environment = [
       {
         name  = "API_ENDPOINT"
-        value = aws_api_gateway_stage.production.invoke_url != "" ? "${aws_api_gateway_stage.production.invoke_url}/find-fdes" : ""
+        value = aws_lambda_function_url.orchestration.function_url
       },
       {
         name  = "API_KEY"
-        value = aws_api_gateway_api_key.main.value
+        value = ""
       }
     ]
 
