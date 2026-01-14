@@ -13,7 +13,7 @@ Engineers waste time manually searching for expertise when stuck on complex tick
 ## Solution
 
 An AI-powered system that:
-1. **Analyzes ticket content** using Bedrock Agent with Claude 3.5 Sonnet
+1. **Analyzes ticket content** using Bedrock Agent with Claude Sonnet 4.5
 2. **Searches historical tickets** using Knowledge Bases for similar resolved issues
 3. **Matches FDE expertise** from profiles and past successful resolutions
 4. **Identifies top 3 FDEs** based on semantic similarity and past performance
@@ -40,7 +40,7 @@ Orchestration Lambda (Hybrid Workflow)
     |
     | 3. Invoke Bedrock Agent with mode-specific prompt
     |
-Bedrock Agent (Claude 3.5 Sonnet)
+Bedrock Agent (Claude Sonnet 4.5)
     |
     ├── 4a. Action Group: Fetch Ticket from Zendesk (if ticket_id provided)
     ├── 4b. Knowledge Base: Find Similar Tickets
@@ -72,7 +72,7 @@ User (View Results in Streamlit)
   - Mode 2: Ticket ID + description (with fallback to description)
   - Mode 3: Description only (skip external APIs, use Knowledge Bases)
 
-### 3. **Bedrock Agent (Claude 3.5 Sonnet)**
+### 3. **Bedrock Agent (Claude Sonnet 4.5)**
 - **Function**: AI orchestration and reasoning
 - **Capabilities**:
   - Analyzes ticket content
@@ -106,7 +106,7 @@ User (View Results in Streamlit)
 | Component | Technology | Justification |
 |-----------|-----------|---------------|
 | AI Orchestration | AWS Bedrock Agents | Built-in reasoning and workflow management |
-| LLM | Claude 3.5 Sonnet | Superior reasoning and analysis |
+| LLM | Claude Sonnet 4.5 | Superior reasoning and analysis |
 | Embeddings | Amazon Titan Embeddings v2 | Native Bedrock integration |
 | Vector Database | OpenSearch Serverless | Managed by Bedrock Knowledge Bases |
 | Action Groups | Lambda (Python 3.11) | Cost-effective integrations |
@@ -151,7 +151,7 @@ Zendesk_SME_Finder/
 
 ### Prerequisites
 
-- AWS Account with Bedrock access (Claude 3.5 Sonnet, Amazon Titan Embeddings v2)
+- AWS Account with Bedrock access (Claude Sonnet 4.5, Amazon Titan Embeddings v2)
 - AWS CLI configured
 - Python 3.11+
 - CSV data files exported from BigQuery (tickets and FDE profiles)
@@ -251,7 +251,7 @@ Through this project, you'll learn:
 - **Bedrock Agents**: AI orchestration with Action Groups and Knowledge Bases
 - **RAG Systems**: Building retrieval-augmented generation with Bedrock
 - **Vector Search**: Semantic search with OpenSearch Serverless
-- **AWS Bedrock**: Claude 3.5 Sonnet and Titan Embeddings integration
+- **AWS Bedrock**: Claude Sonnet 4.5 and Titan Embeddings integration
 - **API Integrations**: Zendesk and Slack SDKs
 - **Serverless Architecture**: Lambda, API Gateway, managed services
 - **Streamlit**: Building interactive web UIs with Python
@@ -302,7 +302,7 @@ Through this project, you'll learn:
 
 | Service | Usage | Cost |
 |---------|-------|------|
-| Bedrock Claude 3.5 Sonnet | 200K tokens | ~$0.60 |
+| Bedrock Claude Sonnet 4.5 | 200K tokens | ~$0.60 |
 | Bedrock Titan Embeddings v2 | 50K tokens | ~$0.10 |
 | OpenSearch Serverless | 2 collections | ~$1.50 |
 | Lambda | 300 invocations | ~$0.05 |
@@ -351,4 +351,4 @@ For questions or issues, see the deployment guide troubleshooting section.
 
 ---
 
-**Built using AWS Bedrock Agents, Claude 3.5 Sonnet, and Streamlit**
+**Built using AWS Bedrock Agents, Claude Sonnet 4.5, and Streamlit**

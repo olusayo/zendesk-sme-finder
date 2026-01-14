@@ -191,7 +191,7 @@ def lambda_handler(event, context):
 **Purpose**: Orchestrate the entire FDE matching process using AI reasoning
 
 **Agent Configuration**:
-- **Model**: Claude 3.5 Sonnet
+- **Model**: Claude Sonnet 4.5
 - **Instructions**:
   ```
   You are an expert at matching support tickets with Field Development Engineers (FDEs).
@@ -524,7 +524,7 @@ Based on 500 requests/month:
 
 | Service | Usage | Cost |
 |---------|-------|------|
-| Bedrock Agent (Claude 3.5 Sonnet) | 500 sessions × 2K tokens | ~$1.50 |
+| Bedrock Agent (Claude Sonnet 4.5) | 500 sessions × 2K tokens | ~$1.50 |
 | Bedrock Knowledge Bases | 1000 queries | ~$0.50 |
 | Lambda | 1500 invocations | ~$0.10 |
 | API Gateway | 500 requests | ~$0.002 |

@@ -181,7 +181,7 @@ Now create the Bedrock Agent in the AWS Console:
 
 **Basic Configuration:**
 - Name: `zendesk-sme-finder-agent`
-- Model: Claude 3.5 Sonnet
+- Model: Claude Sonnet 4.5
 - IAM role: Look for `zendesk-sme-finder-bedrock-agent-role` (created by Terraform)
 
 **Instructions:** Copy from the manual deployment guide or use:
