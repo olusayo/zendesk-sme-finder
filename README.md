@@ -91,12 +91,15 @@ User (View Results in Streamlit)
 
 ### 5. **Knowledge Bases (OpenSearch Serverless)**
 - **Similar Tickets KB**: Historical tickets with resolutions
-  - Data source: `s3://genai-enablement-team3-us-east-1/tickets/`
+  - Origin: Google Cloud Platform BigQuery (exported as CSV)
+  - Storage: S3 bucket (auto-created by Terraform)
   - Contains: CSV files with ticket IDs, subjects, descriptions, and resolutions
 - **FDE Profiles KB**: FDE expertise, certifications, and past successes
-  - Data source: `s3://genai-enablement-team3-us-east-1/certificates/`
+  - Origin: Google Cloud Platform BigQuery (exported as CSV)
+  - Storage: S3 bucket (auto-created by Terraform)
   - Contains: FDE names, emails, certifications, expertise areas
 - **Embeddings**: Amazon Titan Embeddings v2
+- **Data Flow**: BigQuery → CSV export → S3 upload → Bedrock ingestion
 
 ## Technology Stack
 
@@ -151,6 +154,7 @@ Zendesk_SME_Finder/
 - AWS Account with Bedrock access (Claude 3.5 Sonnet, Amazon Titan Embeddings v2)
 - AWS CLI configured
 - Python 3.11+
+- CSV data files exported from BigQuery (tickets and FDE profiles)
 - Zendesk API credentials (optional - required only for full Zendesk/Slack workflow)
 - Slack Bot token (optional - required only for full Zendesk/Slack workflow)
 
@@ -161,7 +165,7 @@ Choose your deployment method:
 **Option 1: Terraform (Recommended) - 15 minutes**
 - Automated infrastructure deployment
 - Repeatable and version-controlled
-- See [terraform/TERRAFORM_DEPLOYMENT_GUIDE.md](terraform/TERRAFORM_DEPLOYMENT_GUIDE.md)
+- See [terraform/IAC_AUTOMATION_GUIDE.md](terraform/IAC_AUTOMATION_GUIDE.md)
 
 **Option 2: Manual Deployment**
 - Step-by-step comprehensive guide
@@ -170,12 +174,12 @@ Choose your deployment method:
 
 **High-level steps** (both methods):
 
-1. Enable Bedrock model access
-2. Create Knowledge Bases with sample data
-3. Deploy Lambda functions (automated with Terraform)
-4. Create and configure Bedrock Agent
-5. Set up API Gateway (automated with Terraform)
-6. Deploy Streamlit frontend
+1. Prepare data: Export CSV files from BigQuery - See [DATA_PREPARATION_GUIDE.md](DATA_PREPARATION_GUIDE.md)
+2. Enable Bedrock model access
+3. Deploy infrastructure (Terraform creates S3 buckets, Knowledge Bases, Lambda, ECS)
+4. Upload CSV data to S3 buckets
+5. Trigger Knowledge Base ingestion
+6. Test the system
 
 ### Local Testing
 
@@ -327,13 +331,19 @@ After deployment:
 
 ## Documentation
 
-- **[Complete Deployment Guide](COMPLETE_DEPLOYMENT_GUIDE.md)**: Comprehensive step-by-step deployment guide
-- **[Terraform IaC Automation Guide](terraform/IAC_AUTOMATION_GUIDE.md)**: Fully automated Infrastructure as Code deployment
+### Deployment Guides
+- **[Complete Deployment Guide](COMPLETE_DEPLOYMENT_GUIDE.md)**: Comprehensive step-by-step manual deployment (2-3 hours)
+- **[Terraform IaC Automation Guide](terraform/IAC_AUTOMATION_GUIDE.md)**: Fully automated Infrastructure as Code deployment (15 minutes)
+- **[Data Preparation Guide](DATA_PREPARATION_GUIDE.md)**: How to export data from BigQuery and upload to S3
+
+### Configuration & Usage
 - **[Hybrid Workflow Guide](HYBRID_WORKFLOW_GUIDE.md)**: Using the system with or without Zendesk/Slack API keys
 - **[Bedrock Agent Instructions](BEDROCK_AGENT_INSTRUCTIONS.md)**: Agent configuration and prompts
-- **[Architecture V2](docs/ARCHITECTURE_V2.md)**: Complete architecture design
-- **[Architecture Diagram](docs/architecture-diagram.pdf)**: Visual workflow diagram
 - **[ECS Deployment Guide](terraform/ECS_DEPLOYMENT_GUIDE.md)**: ECS Fargate frontend deployment details
+
+### Architecture
+- **[Architecture V2](docs/ARCHITECTURE_V2.md)**: Complete architecture design and technical details
+- **[Architecture Diagram](docs/architecture-diagram.pdf)**: Visual workflow diagram
 
 ## Support
 
