@@ -1,23 +1,23 @@
 # Complete AWS Deployment Guide - Zendesk SME Finder
 ## Automated (Terraform) + Manual Deployment Options
 
-⚡ **NEW: Fully Automated Deployment Available!**
+**NEW: Fully Automated Deployment Available!**
 
 **We now offer TWO deployment methods:**
 
-### 🚀 Option 1: Fully Automated (Terraform) - **RECOMMENDED** ⭐
+### Option 1: Fully Automated (Terraform) - **RECOMMENDED**
 - **Time**: 15 minutes
 - **Expertise**: Basic AWS CLI knowledge
 - **Automation**: 95% automated via Infrastructure as Code
 - **Guide**: See [terraform/IAC_AUTOMATION_GUIDE.md](terraform/IAC_AUTOMATION_GUIDE.md)
 - **What's Automated**:
-  - ✅ Bedrock Agent creation
-  - ✅ Knowledge Bases with OpenSearch
-  - ✅ Lambda functions & Function URLs
-  - ✅ S3 buckets for data
-  - ✅ ECS Fargate frontend
-  - ✅ All IAM roles & policies
-  - ✅ VPC, ALB, and networking
+  - Bedrock Agent creation
+  - Knowledge Bases with OpenSearch
+  - Lambda functions & Function URLs
+  - S3 buckets for data
+  - ECS Fargate frontend
+  - All IAM roles & policies
+  - VPC, ALB, and networking
 
 **Quick Start (Automated):**
 ```bash
@@ -27,10 +27,10 @@ cp terraform.tfvars.example terraform.tfvars
 terraform init
 terraform apply -auto-approve
 # Upload your data to S3 (paths in output)
-# Done! ✅
+# Done!
 ```
 
-### 📖 Option 2: Manual Deployment (This Guide)
+### Option 2: Manual Deployment (This Guide)
 - **Time**: 2-3 hours
 - **Expertise**: None required - browser only
 - **Automation**: Step-by-step console clicking
@@ -38,7 +38,7 @@ terraform apply -auto-approve
 
 ---
 
-**✨ Updated for 2026**: This guide reflects the latest AWS console interface:
+**Updated for 2026**: This guide reflects the latest AWS console interface:
 - Claude 4.5 model family (Sonnet 4.5, Opus 4.5, Haiku 4.5)
 - Bedrock model access process with use case submission
 - OpenSearch Serverless with "Vector search" type
@@ -330,7 +330,7 @@ You should see `Terraform v1.5.x` or higher.
 
 ## Part 4: Configure AWS Bedrock
 
-**🎉 Major Update (2026)**: AWS has **simplified model access**! Foundation models are now automatically enabled when first invoked - no manual activation required! However, Anthropic models still need a one-time use case submission.
+**Major Update (2026)**: AWS has **simplified model access**! Foundation models are now automatically enabled when first invoked - no manual activation required! However, Anthropic models still need a one-time use case submission.
 
 ### Step 4.1: Navigate to Bedrock Console
 
@@ -342,10 +342,10 @@ You should see `Terraform v1.5.x` or higher.
 ### Step 4.2: Understanding the New Model Access Process
 
 **What Changed**:
-- ✅ **Model access page has been retired**
-- ✅ **Serverless foundation models are now automatically enabled** across all AWS commercial regions when first invoked
-- ✅ **No manual activation needed** - models are instantly available
-- ⚠️ **Exception**: Anthropic models require a one-time use case submission for first-time users
+- **Model access page has been retired**
+- **Serverless foundation models are now automatically enabled** across all AWS commercial regions when first invoked
+- **No manual activation needed** - models are instantly available
+- **Exception**: Anthropic models require a one-time use case submission for first-time users
 
 **What This Means for You**:
 - Claude Sonnet 4.5 and Titan Embeddings will be automatically enabled when your Lambda functions invoke them
@@ -409,15 +409,15 @@ First API Call → Anthropic Model
          ↓
    Check: Use case submitted?
          ↓
-    Yes → Model invokes successfully ✅
-    No  → Error: Submit use case ❌
+    Yes → Model invokes successfully
+    No  → Error: Submit use case
 ```
 
 **For Amazon Models** (Titan Embeddings):
 ```
 First API Call → Amazon Model
          ↓
-   Automatically enabled ✅
+   Automatically enabled
          ↓
    Model invokes successfully
 ```
@@ -432,7 +432,7 @@ First API Call → Amazon Model
 
 ## Part 5: Deploy Infrastructure with Terraform
 
-🚀 **This is where the magic happens!** After this step, you'll have your Streamlit app running on AWS!
+**This is where the magic happens!** After this step, you'll have your Streamlit app running on AWS!
 
 This deploys:
 - **ECS Fargate cluster** - Where your Streamlit app will run
@@ -586,7 +586,7 @@ Press Enter. Copy and save this value.
 
 ## Part 6: Build and Deploy Frontend
 
-🎉 **Almost there! This is the final step to see your Streamlit app running!**
+**Almost there! This is the final step to see your Streamlit app running!**
 
 Now build the Docker image for the beautiful Streamlit chat interface and deploy to ECS.
 
@@ -681,15 +681,15 @@ http://zendesk-sme-finder-alb-123456789.us-east-1.elb.amazonaws.com
 
 Copy this URL. Open it in a new browser tab.
 
-🎊 **Congratulations!** You should see the beautiful Streamlit chat interface with:
+**Congratulations!** You should see the beautiful Streamlit chat interface with:
 - Professional dark blue and charcoal color scheme
 - Clean, modern typography
 - Welcome message from the FDE Finder assistant
 
 **What you can do now**:
-- ✅ See the beautiful interface running
-- ✅ Type messages in the chat (UI will respond)
-- ❌ Full AI functionality requires completing Parts 7-9 (Bedrock Agent setup)
+- [DONE] See the beautiful interface running
+- [DONE] Type messages in the chat (UI will respond)
+- [NOT YET] Full AI functionality requires completing Parts 7-9 (Bedrock Agent setup)
 
 **Want to try it out?** Type "Find FDEs for ticket 12345" to see the chat interaction (full results come after Part 9).
 
@@ -705,13 +705,13 @@ Knowledge Bases allow the AI to search historical tickets and FDE profiles using
 
 ### Step 7.1: Skip Manual OpenSearch Setup (2026 Simplified Process)
 
-**🎉 Good News**: In the 2026 AWS console, you no longer need to manually create OpenSearch collections! AWS Bedrock will automatically create and configure everything when you create the Knowledge Base.
+**Good News**: In the 2026 AWS console, you no longer need to manually create OpenSearch collections! AWS Bedrock will automatically create and configure everything when you create the Knowledge Base.
 
 **What Changed**:
-- ✅ The **"Quick create a new vector store"** option automatically creates OpenSearch collections, indexes, and all required configurations
-- ✅ No need to manually create data access policies
-- ✅ No need to copy/paste collection endpoints
-- ✅ Everything is handled automatically by AWS
+- The **"Quick create a new vector store"** option automatically creates OpenSearch collections, indexes, and all required configurations
+- No need to manually create data access policies
+- No need to copy/paste collection endpoints
+- Everything is handled automatically by AWS
 
 **Skip to Step 7.2** to create your first Knowledge Base. AWS will handle all the OpenSearch setup for you!
 
@@ -744,7 +744,7 @@ Knowledge Bases allow the AI to search historical tickets and FDE profiles using
 17. **Embeddings model**: Select **"Titan Text Embeddings V2"** (or "Titan Embeddings G1 - Text")
    - Note: V2 is newer and recommended if available
 18. **Vector store**: Select **"OpenSearch Serverless"**
-19. ⚠️ **IMPORTANT**: Select **"Quick create a new vector store - Recommended"** (the top radio button)
+19. **IMPORTANT**: Select **"Quick create a new vector store - Recommended"** (the top radio button)
    - This will automatically create an OpenSearch collection, index, and all configurations
    - AWS will handle naming and setup automatically
    - No need to provide collection endpoints or index names
@@ -1090,10 +1090,10 @@ Before creating an alias, test the agent to ensure it works correctly.
    - Creating Slack conversation
 
 **If you see errors**, check:
-- ✅ Knowledge Bases show "Available" status and are synced
-- ✅ Lambda functions exist: `zendesk-sme-finder-zendesk-actions` and `zendesk-sme-finder-slack-actions`
-- ✅ IAM role `zendesk-sme-finder-bedrock-agent-role` has correct permissions
-- ✅ Agent was prepared successfully
+- Knowledge Bases show "Available" status and are synced
+- Lambda functions exist: `zendesk-sme-finder-zendesk-actions` and `zendesk-sme-finder-slack-actions`
+- IAM role `zendesk-sme-finder-bedrock-agent-role` has correct permissions
+- Agent was prepared successfully
 
 ### Step 8.7: Create Agent Alias
 
@@ -1216,9 +1216,9 @@ You'll see the chat interface with a welcome message.
 
 **Example response**:
 ```
-✅ Found FDEs for ticket #12345
+[DONE] Found FDEs for ticket #12345
 
-👥 Recommended Field Development Engineers
+Recommended Field Development Engineers
 
 1. John Doe - 95% Match
    - Email: john.doe@company.com
@@ -1232,10 +1232,10 @@ You'll see the chat interface with a welcome message.
 
 ...
 
-🔗 Next Steps
+Next Steps
 
-✅ Open Slack Conversation
-✅ View Zendesk Ticket
+[DONE] Open Slack Conversation
+[DONE] View Zendesk Ticket
 
 ---
 

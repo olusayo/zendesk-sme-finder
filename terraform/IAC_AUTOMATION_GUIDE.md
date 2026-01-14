@@ -4,17 +4,17 @@
 
 This Terraform configuration now provides **fully automated deployment** of the entire Zendesk SME Finder infrastructure, including:
 
-✅ **Bedrock Agent** - AI orchestration with Claude Sonnet 4.5
-✅ **Knowledge Bases** - Vector search with OpenSearch Serverless
-✅ **Lambda Functions** - Orchestration and action groups
-✅ **Lambda Function URLs** - Direct invocation with 15-minute timeout
-✅ **S3 Data Buckets** - Knowledge Base data storage
-✅ **ECS Fargate Frontend** - Streamlit web application
-✅ **IAM Roles & Policies** - Least-privilege access
-✅ **Secrets Management** - Secure credential storage
-✅ **Networking** - VPC, ALB, and security groups
+**Bedrock Agent** - AI orchestration with Claude Sonnet 4.5
+**Knowledge Bases** - Vector search with OpenSearch Serverless
+**Lambda Functions** - Orchestration and action groups
+**Lambda Function URLs** - Direct invocation with 15-minute timeout
+**S3 Data Buckets** - Knowledge Base data storage
+**ECS Fargate Frontend** - Streamlit web application
+**IAM Roles & Policies** - Least-privilege access
+**Secrets Management** - Secure credential storage
+**Networking** - VPC, ALB, and security groups
 
-## What's New? 🚀
+## What's New?
 
 ### Previously Manual Steps (Now Automated)
 
@@ -42,7 +42,7 @@ terraform/
 └── IAC_AUTOMATION_GUIDE.md    # THIS FILE
 ```
 
-## One-Command Deployment 🎯
+## One-Command Deployment
 
 ### Before (Manual - 2-3 hours)
 ```bash
@@ -80,7 +80,7 @@ aws s3 sync ./data/fde-profiles/ s3://$(terraform output -raw s3_data_bucket)/fd
 # 4. Trigger Knowledge Base ingestion
 # (Commands provided in terraform output)
 
-# Done! ✅
+# Done!
 ```
 
 ## Configuration Variables
@@ -218,7 +218,7 @@ Review the resources that will be created:
 terraform apply -auto-approve
 ```
 
-This will take 10-15 minutes. Grab a coffee! ☕
+This will take 10-15 minutes.
 
 ### Step 6: Upload Knowledge Base Data
 
@@ -506,25 +506,25 @@ terraform destroy -target=aws_bedrockagent_agent.fde_finder
 
 ## Benefits of IaC Automation
 
-✅ **Consistency** - Same infrastructure every time
-✅ **Speed** - 15 minutes vs 2-3 hours
-✅ **Reproducibility** - Multi-environment deployment
-✅ **Documentation** - Code is self-documenting
-✅ **Version Control** - Track all infrastructure changes
-✅ **Collaboration** - Team can review and contribute
-✅ **Safety** - Plan before apply, rollback capability
-✅ **Testing** - Test infrastructure changes in dev first
-✅ **Compliance** - Automated security and compliance checks
+**Consistency** - Same infrastructure every time
+**Speed** - 15 minutes vs 2-3 hours
+**Reproducibility** - Multi-environment deployment
+**Documentation** - Code is self-documenting
+**Version Control** - Track all infrastructure changes
+**Collaboration** - Team can review and contribute
+**Safety** - Plan before apply, rollback capability
+**Testing** - Test infrastructure changes in dev first
+**Compliance** - Automated security and compliance checks
 
 ## Next Steps
 
-1. ✅ Deploy with `terraform apply`
-2. ✅ Upload your CSV data to S3
-3. ✅ Trigger Knowledge Base ingestion
-4. ✅ Test the Streamlit frontend
-5. ✅ Monitor CloudWatch logs
-6. 📚 Read [HYBRID_WORKFLOW_GUIDE.md](../HYBRID_WORKFLOW_GUIDE.md)
-7. 📚 Read [COMPLETE_DEPLOYMENT_GUIDE.md](../COMPLETE_DEPLOYMENT_GUIDE.md)
+1. Deploy with `terraform apply`
+2. Upload your CSV data to S3
+3. Trigger Knowledge Base ingestion
+4. Test the Streamlit frontend
+5. Monitor CloudWatch logs
+6. Read [HYBRID_WORKFLOW_GUIDE.md](../HYBRID_WORKFLOW_GUIDE.md)
+7. Read [COMPLETE_DEPLOYMENT_GUIDE.md](../COMPLETE_DEPLOYMENT_GUIDE.md)
 
 ## Support
 

@@ -49,7 +49,7 @@ resource "aws_bedrockagent_data_source" "tickets" {
     s3_configuration {
       bucket_arn = aws_s3_bucket.knowledge_base_data.arn
       inclusion_prefixes = [
-        "tickets/"
+        var.tickets_s3_prefix
       ]
     }
   }
@@ -118,7 +118,7 @@ resource "aws_bedrockagent_data_source" "fde_profiles" {
     s3_configuration {
       bucket_arn = aws_s3_bucket.knowledge_base_data.arn
       inclusion_prefixes = [
-        "fde-profiles/"
+        var.certificates_s3_prefix
       ]
     }
   }

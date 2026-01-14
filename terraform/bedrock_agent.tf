@@ -181,8 +181,10 @@ resource "aws_bedrockagent_agent_action_group" "zendesk" {
 
 # Action Group for Slack Operations
 resource "aws_bedrockagent_agent_action_group" "slack" {
+  count = var.enable_bedrock_agent ? 1 : 0
+
   action_group_name          = "slack-operations"
-  agent_id                   = aws_bedrockagent_agent.fde_finder.id
+  agent_id                   = aws_bedrockagent_agent.fde_finder[0].id
   agent_version              = "DRAFT"
   description                = "Create Slack conversations with engineers and FDEs"
   skip_resource_in_use_check = true
@@ -251,7 +253,9 @@ resource "aws_bedrockagent_agent_action_group" "slack" {
 
 # Associate Tickets Knowledge Base with Agent
 resource "aws_bedrockagent_agent_knowledge_base_association" "tickets" {
-  agent_id             = aws_bedrockagent_agent.fde_finder.id
+  count = var.enable_bedrock_agent ? 1 : 0
+
+  agent_id             = aws_bedrockagent_agent.fde_finder[0].id
   agent_version        = "DRAFT"
   knowledge_base_id    = aws_bedrockagent_knowledge_base.tickets.id
   description          = "Historical tickets for similarity search"
@@ -264,7 +268,9 @@ resource "aws_bedrockagent_agent_knowledge_base_association" "tickets" {
 
 # Associate FDE Profiles Knowledge Base with Agent
 resource "aws_bedrockagent_agent_knowledge_base_association" "fde_profiles" {
-  agent_id             = aws_bedrockagent_agent.fde_finder.id
+  count = var.enable_bedrock_agent ? 1 : 0
+
+  agent_id             = aws_bedrockagent_agent.fde_finder[0].id
   agent_version        = "DRAFT"
   knowledge_base_id    = aws_bedrockagent_knowledge_base.fde_profiles.id
   description          = "FDE expertise profiles for expert matching"
@@ -278,8 +284,10 @@ resource "aws_bedrockagent_agent_knowledge_base_association" "fde_profiles" {
 # Prepare the Agent (compile and make it ready)
 # Note: This creates a prepared version of the DRAFT
 resource "aws_bedrockagent_agent_alias" "production" {
+  count = var.enable_bedrock_agent ? 1 : 0
+
   agent_alias_name = "production"
-  agent_id         = aws_bedrockagent_agent.fde_finder.id
+  agent_id         = aws_bedrockagent_agent.fde_finder[0].id
   description      = "Production alias for FDE Finder agent"
 
   depends_on = [
@@ -292,8 +300,10 @@ resource "aws_bedrockagent_agent_alias" "production" {
 
 # Test alias pointing to DRAFT (for testing with latest changes)
 resource "aws_bedrockagent_agent_alias" "test" {
+  count = var.enable_bedrock_agent ? 1 : 0
+
   agent_alias_name = "test"
-  agent_id         = aws_bedrockagent_agent.fde_finder.id
+  agent_id         = aws_bedrockagent_agent.fde_finder[0].id
   description      = "Test alias for FDE Finder agent (points to DRAFT version)"
 
   depends_on = [

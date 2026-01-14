@@ -4,10 +4,10 @@
 
 The Zendesk SME Finder now supports a **hybrid workflow** that gracefully handles scenarios where Zendesk and Slack API credentials are not available. This allows you to:
 
-1. ✅ **Test the system** without API credentials using ticket descriptions
-2. ✅ **Get FDE recommendations** based on historical data and expertise matching
-3. ✅ **Use full integration** when API credentials become available (future)
-4. ✅ **Automatic fallback** if Zendesk API calls fail
+1. **Test the system** without API credentials using ticket descriptions
+2. **Get FDE recommendations** based on historical data and expertise matching
+3. **Use full integration** when API credentials become available (future)
+4. **Automatic fallback** if Zendesk API calls fail
 
 ---
 
@@ -171,35 +171,35 @@ Customer experiencing PostgreSQL performance issues with slow queries and timeou
 ### With Ticket ID
 ```
 User: "Find FDEs for ticket 12345"
-System: "🔍 Searching for FDEs for ticket #12345..."
+System: "Searching for FDEs for ticket #12345..."
 System: (Tries Zendesk API, gracefully falls back if needed)
-System: "✅ Found FDEs for ticket #12345
+System: "Found FDEs for ticket #12345
 
-### 👥 Recommended Field Development Engineers
+### Recommended Field Development Engineers
 
 **1. John Doe** - 95% Match
-- 📧 Email: john.doe@company.com
-- 🎯 Expertise: PostgreSQL, Performance Tuning, Cloud Infrastructure
-- 💬 Slack: @U12345678
-- 📝 Reasoning: Strong PostgreSQL expertise with 8+ years experience. Successfully resolved 15 similar performance issues.
+- Email: john.doe@company.com
+- Expertise: PostgreSQL, Performance Tuning, Cloud Infrastructure
+- Slack: @U12345678
+- Reasoning: Strong PostgreSQL expertise with 8+ years experience. Successfully resolved 15 similar performance issues.
 
 **2. Jane Smith** - 88% Match
-- 📧 Email: jane.smith@company.com
-- 🎯 Expertise: Database Architecture, PostgreSQL, Query Optimization
-- 💬 Slack: @U87654321
-- 📝 Reasoning: Database architecture specialist with deep PostgreSQL knowledge.
+- Email: jane.smith@company.com
+- Expertise: Database Architecture, PostgreSQL, Query Optimization
+- Slack: @U87654321
+- Reasoning: Database architecture specialist with deep PostgreSQL knowledge.
 
 **3. Mike Johnson** - 82% Match
-- 📧 Email: mike.johnson@company.com
-- 🎯 Expertise: DevOps, PostgreSQL, Performance Monitoring
-- 💬 Slack: @U11223344
-- 📝 Reasoning: DevOps background with PostgreSQL performance expertise."
+- Email: mike.johnson@company.com
+- Expertise: DevOps, PostgreSQL, Performance Monitoring
+- Slack: @U11223344
+- Reasoning: DevOps background with PostgreSQL performance expertise."
 ```
 
 ### With Description Only
 ```
 User: "Customer experiencing PostgreSQL performance issues with slow queries and timeouts"
-System: "🔍 Analyzing your description and searching for matching FDEs..."
+System: "Analyzing your description and searching for matching FDEs..."
 System: (Searches Knowledge Bases directly, skips Zendesk/Slack)
 System: (Returns same FDE recommendations as above)
 ```
@@ -208,23 +208,23 @@ System: (Returns same FDE recommendations as above)
 
 ## Benefits of Hybrid Approach
 
-### 1. **Testable Without API Keys** ✅
+### 1. **Testable Without API Keys**
 - Deploy the system immediately
 - Test AI recommendations
 - Validate Knowledge Base search quality
 - Demo the system to stakeholders
 
-### 2. **Graceful Degradation** ✅
+### 2. **Graceful Degradation**
 - System never fails completely
 - Always provides FDE recommendations
 - Users get value even without full integration
 
-### 3. **Future-Ready** ✅
+### 3. **Future-Ready**
 - Add API keys later without code changes
 - Automatic upgrade to full functionality
 - No redeployment needed
 
-### 4. **Flexible Input** ✅
+### 4. **Flexible Input**
 - Users can provide ticket IDs when available
 - Users can describe issues in natural language
 - System adapts to what's provided
@@ -349,10 +349,10 @@ When you get real API keys:
 
 ### No Changes Needed For
 
-- ✅ Lambda action groups (zendesk/slack) - keep as-is
-- ✅ Knowledge Bases - already functional
-- ✅ Terraform infrastructure - no changes
-- ✅ API Gateway - accepts new parameters
+- Lambda action groups (zendesk/slack) - keep as-is
+- Knowledge Bases - already functional
+- Terraform infrastructure - no changes
+- API Gateway - accepts new parameters
 
 ---
 
@@ -459,13 +459,13 @@ A: Yes! The Bedrock Agent detects failures and switches modes automatically.
 
 ## Next Steps
 
-1. ✅ Deploy the system with placeholder credentials
-2. ✅ Test with ticket descriptions
-3. ✅ Validate FDE recommendations quality
-4. ✅ Review Knowledge Base search results
-5. ⏳ Obtain real API credentials (when ready)
-6. ⏳ Update terraform.tfvars and redeploy
-7. ⏳ Test full workflow with Zendesk/Slack integration
+1. [DONE] Deploy the system with placeholder credentials
+2. [DONE] Test with ticket descriptions
+3. [DONE] Validate FDE recommendations quality
+4. [DONE] Review Knowledge Base search results
+5. [TODO] Obtain real API credentials (when ready)
+6. [TODO] Update terraform.tfvars and redeploy
+7. [TODO] Test full workflow with Zendesk/Slack integration
 
 ---
 

@@ -328,12 +328,12 @@ After deployment:
 ## Documentation
 
 - **[Complete Deployment Guide](COMPLETE_DEPLOYMENT_GUIDE.md)**: Comprehensive step-by-step deployment guide
+- **[Terraform IaC Automation Guide](terraform/IAC_AUTOMATION_GUIDE.md)**: Fully automated Infrastructure as Code deployment
 - **[Hybrid Workflow Guide](HYBRID_WORKFLOW_GUIDE.md)**: Using the system with or without Zendesk/Slack API keys
 - **[Bedrock Agent Instructions](BEDROCK_AGENT_INSTRUCTIONS.md)**: Agent configuration and prompts
 - **[Architecture V2](docs/ARCHITECTURE_V2.md)**: Complete architecture design
-- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)**: Additional deployment reference
 - **[Architecture Diagram](docs/architecture-diagram.pdf)**: Visual workflow diagram
-- **[Terraform Deployment Guide](terraform/TERRAFORM_DEPLOYMENT_GUIDE.md)**: Infrastructure as Code deployment
+- **[ECS Deployment Guide](terraform/ECS_DEPLOYMENT_GUIDE.md)**: ECS Fargate frontend deployment details
 
 ## Support
 
