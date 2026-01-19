@@ -6,8 +6,9 @@ resource "aws_s3_bucket" "knowledge_base_data" {
   bucket = "${var.project_name}-kb-data-${data.aws_caller_identity.current.account_id}"
 
   tags = {
-    Name        = "${var.project_name}-knowledge-base-data"
-    Description = "Storage for Knowledge Base data sources (tickets and FDE profiles)"
+    Name        = "${var.project_name}-kb-data"
+    Environment = var.environment
+    ManagedBy   = "terraform"
   }
 }
 
