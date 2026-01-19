@@ -49,6 +49,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "knowledge_base_data" {
     id     = "expire-old-versions"
     status = "Enabled"
 
+    filter {
+      prefix = ""
+    }
+
     noncurrent_version_expiration {
       noncurrent_days = 90
     }

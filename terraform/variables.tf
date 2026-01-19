@@ -13,7 +13,7 @@ variable "environment" {
 variable "project_name" {
   description = "Project name used for resource naming"
   type        = string
-  default     = "zendesk-sme-finder"
+  default     = "sme-finder"
 }
 
 # Secrets Configuration
