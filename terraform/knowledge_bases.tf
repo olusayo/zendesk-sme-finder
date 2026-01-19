@@ -31,7 +31,7 @@ resource "aws_bedrockagent_knowledge_base" "tickets" {
     aws_opensearchserverless_collection.tickets_kb,
     aws_opensearchserverless_access_policy.knowledge_base_data_access,
     aws_iam_role.knowledge_base_tickets,
-    aws_iam_role_policy_attachment.knowledge_base_tickets_s3
+    aws_iam_role_policy.knowledge_base_tickets_policy
   ]
 
   tags = {
@@ -102,7 +102,7 @@ resource "aws_bedrockagent_knowledge_base" "fde_profiles" {
     aws_opensearchserverless_collection.fde_profiles_kb,
     aws_opensearchserverless_access_policy.knowledge_base_data_access,
     aws_iam_role.knowledge_base_fde_profiles,
-    aws_iam_role_policy_attachment.knowledge_base_fde_profiles_s3
+    aws_iam_role_policy.knowledge_base_fde_profiles_policy
   ]
 
   tags = {
